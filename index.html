@@ -22,10 +22,11 @@
 <link rel=stylesheet href="http://stemkoski.github.io/Three.js/css/jquery-ui.css" />
 
 <script src="http://stemkoski.github.io/Three.js/js/info.js"></script>
-<div id="infoButton"></div>
-<div id="infoBox" title="Demo Information">
-This three.js demo is part of a collection at
-<a href="http://stemkoski.github.io/Three.js/">http://stemkoski.github.io/Three.js/</a>
+
+<style>
+
+</style>
+
 </div>
 <!-- ------------------------------------------------------------ -->
 
@@ -463,7 +464,7 @@ function init()
 	var VIEW_ANGLE = 50, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
-	camera.position.set(0,150,400);
+	camera.position.set(-400,400,200);
 	camera.lookAt(scene.position);
 	// RENDERER
 	if ( Detector.webgl )
@@ -494,7 +495,7 @@ function init()
 	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, side: THREE.BackSide } );
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	// scene.add(skyBox);
-	scene.fog = new THREE.FogExp2( 0xffffff, 0.00015 );
+	scene.fog = new THREE.FogExp2( 0xffffff, 0.000015 );
 
 	////////////
 	// CUSTOM //
@@ -505,11 +506,11 @@ function init()
 	// "shadow cameras" show the light source and direction
 
 	// spotlight #1 -- yellow, dark shadow
-	var spotlight = new THREE.SpotLight(0xff0000);
+	var spotlight = new THREE.SpotLight(0xf9ecec);
 	spotlight.position.set(250,500,-100);
-	spotlight.shadowCameraVisible = true;
-	spotlight.shadowDarkness = 0.95;
-	spotlight.intensity = 5;
+	spotlight.shadowCameraVisible = false;
+	spotlight.shadowDarkness = 2;
+	spotlight.intensity = 3;
 	// must enable shadow casting ability for the light
 	spotlight.castShadow = true;
 	scene.add(spotlight);
@@ -517,18 +518,21 @@ function init()
 	// spotlight #1 -- yellow, dark shadow
 	var spotlight = new THREE.SpotLight(0x0000ff);
 	spotlight.position.set(250,10,500);
-	spotlight.shadowCameraVisible = true;
-	spotlight.shadowDarkness = 10;
-	spotlight.intensity = 30;
+	spotlight.shadowCameraVisible = false;
+	spotlight.shadowDarkness = 0.5;
+	spotlight.intensity = 2;
 	// must enable shadow casting ability for the light
 	spotlight.castShadow = true;
 	scene.add(spotlight);
 
+
+
+
 	// spotlight #1 -- yellow, dark shadow
 	var spotlight = new THREE.SpotLight(0x001f4d);
 	spotlight.position.set(-250,200,-500);
-	spotlight.shadowCameraVisible = true;
-	spotlight.shadowDarkness = 10;
+	spotlight.shadowCameraVisible = false;
+	spotlight.shadowDarkness = 0.5;
 	spotlight.intensity = 6;
 	// must enable shadow casting ability for the light
 	spotlight.castShadow = true;
@@ -538,26 +542,17 @@ function init()
 	var spotlight2 = new THREE.SpotLight(0xff9933);
 	spotlight2.position.set(150,80,-100);
 	scene.add(spotlight2);
-	spotlight2.shadowCameraVisible = true;
-	spotlight2.shadowDarkness = 10;
-	spotlight2.intensity = 30;
+	spotlight2.shadowCameraVisible = false;
+	spotlight2.shadowDarkness = 2;
+	spotlight2.intensity = 20;
 	spotlight2.castShadow = true;
 
 	// spotlight #3
 	var spotlight3 = new THREE.SpotLight(0xff9933);
 	spotlight3.position.set(150,80,-100);
-	spotlight3.shadowCameraVisible = true;
-	spotlight3.shadowDarkness = 5;
-	spotlight3.intensity = 20;
-	spotlight3.castShadow = true;
-	scene.add(spotlight3);
-
-	// spotlight #3
-	var spotlight3 = new THREE.SpotLight(0x80ffff);
-	spotlight3.position.set(150,100,1000);
-	spotlight3.shadowCameraVisible = true;
-	spotlight3.shadowDarkness = 5;
-	spotlight3.intensity = 4;
+	spotlight3.shadowCameraVisible = false;
+	spotlight3.shadowDarkness = 0.5;
+	spotlight3.intensity = 2;
 	spotlight3.castShadow = true;
 	scene.add(spotlight3);
 
@@ -576,16 +571,128 @@ function init()
 	scene.add(lightTarget);
 	spotlight2.target = lightTarget;
 
+//-------------------------------------------------------------------
+//-------------------------------------------------------------------
+// create the dom Element
+/*
+
+var element = document.createElement( 'img' );
+element.src = 'textures/sprites/ball.png';
+// create the object3d for this element
+var cssObject = new THREE.Object( element );
+// we reference the same position and rotation
+cssObject.position = planeMesh.position;
+cssObject.rotation = planeMesh.rotation;
+// add it to the css scene
+cssScene.add(cssObject);
+var cssRenderer = new THREE.CSS3DRenderer();
+cssRenderer.setSize( window.innerWidth, window.innerHeight );
+cssRenderer.domElement.style.position = 'absolute';
+cssRenderer.domElement.style.top = 0;
+
+*/
 
 
+
+//-------------------------------------------------------------------
+//-------------------------------------------------------------------
+
+
+
+
+	// var shape = [20, 200, 300];
+	// var color = "0x80ffff";
+	// var position = [0, 50, 0];
+	//
+// THIS PART IS WHAT ERIN SHOWED ME IN CLASS
+/*
+	var createShape = function(shape, color, position) {
+		// cube: mesh to cast shadows
+		var cubeGeometry = new THREE.CubeGeometry( shape[0], shape[1], shape[2] );
+		var cubeMaterial = new THREE.MeshLambertMaterial( { color: color } );
+		cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+		cube.position.set(position[0], position[1], position[2]);
+		// Note that the mesh is flagged to cast shadows
+		cube.castShadow = true;
+		scene.add(cube);
+	}
+
+
+	for (var i = -10^2; i<100; i++) {
+
+		var offset = i * 3.5^0.1;
+
+		createShape([20, 200, 300+offset], 0x80ffff, [offset, offset, offset]);
+
+	}
+*/
+
+
+
+
+
+}
+
+
+
+
+var clock = new THREE.Clock;
+
+var createShape = function(shape, color, position) {
 	// cube: mesh to cast shadows
-	var cubeGeometry = new THREE.CubeGeometry( 20, 200, 300 );
-	var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x80ffff } );
+	var cubeGeometry = new THREE.CubeGeometry( shape[0], shape[1], shape[2] );
+	var cubeMaterial = new THREE.MeshLambertMaterial( { color: color } );
 	cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-	cube.position.set(0,50,0);
+	cube.position.set(position[0], position[1], position[2]);
 	// Note that the mesh is flagged to cast shadows
 	cube.castShadow = true;
+	cube.receiveShadow = true;
 	scene.add(cube);
+	function animate() {
+    mesh.rotation.x += .20;
+    mesh.rotation.y += .2;
+
+    render();
+    requestAnimationFrame( animate );
+	}
+}
+
+
+for (var i = 10; i<20; i++) {
+
+	var offset = i * -20;
+	var unset = i * 25;
+
+	createShape([10, 1000, 10], 0x80ffff, [offset,0, 0]);
+	createShape([10, 1000, 10], 0x80ffff, [offset,0, 20]);
+	createShape([10, 1000, 10], 0x80ffff, [offset,0, 40]);
+
+
+}
+
+
+
+
+/*
+var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
+var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+cube.position.set(-480,400, -400);
+// Note that the mesh is flagged to cast shadows
+cube.castShadow = true;
+cube.receiveShadow = true;
+scene.add(cube);
+*/
+
+	//
+	// // cube: mesh to cast shadows
+	// var cubeGeometry = new THREE.CubeGeometry( 20, 200, 300 );
+	// var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x80ffff } );
+	// cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+	// cube.position.set(0,50,0);
+	// // Note that the mesh is flagged to cast shadows
+	// cube.castShadow = true;
+	// scene.add(cube);
 
 	var cubeGeometry = new THREE.CubeGeometry( 100, 100, 500 );
 	var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x80ffff } );
@@ -635,21 +742,7 @@ function init()
 	cube.castShadow = true;
 	scene.add(cube);
 
-	var cubeGeometry = new THREE.CubeGeometry( 100, 100, 500 );
-	var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x80ffff } );
-	cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-	cube.position.set(220,0,0);
-	// Note that the mesh is flagged to cast shadows
-	cube.castShadow = true;
-	scene.add(cube);
 
-	var cubeGeometry = new THREE.CubeGeometry( 100, 100, 500 );
-	var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0x80ffff } );
-	cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-	cube.position.set(330,0,0);
-	// Note that the mesh is flagged to cast shadows
-	cube.castShadow = true;
-	scene.add(cube);
 
 
 
@@ -664,6 +757,9 @@ function init()
 	cube.castShadow = true;
 	scene.add(cube);
 
+	var ambLight = new THREE.AmbientLight(0x0d0d0d);
+scene.add(ambLight);
+
 
 // MATTFLOOR
 
@@ -671,31 +767,57 @@ var cubeGeometry = new THREE.CubeGeometry( 1000, 100, 500 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(20,-100,250);
+specular: 0x555555;
+shininess: 30;
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 1000, 100, 500 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(20,-100, -310);
+specular: 0x555555;
+shininess: 30;
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// turning on shadows...?
+
+
+cube.traverse( function ( object ) {
+	object.castShadow = true;
+	object.receiveShadow = true;
+} );
+
+
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+// -----------------------------------------------------------------
+/*
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-480,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
+*/
+/*
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-460,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -703,6 +825,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-440,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -710,6 +833,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-420,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -717,6 +841,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-400,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -724,6 +849,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-380,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -731,6 +857,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-360,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -738,90 +865,91 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-340,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-320,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-300,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-280,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-260,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-240,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-220,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-200,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-180,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-160,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-140,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-120,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-100,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -829,7 +957,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-80,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -837,7 +965,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-60,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -845,7 +973,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-40,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -853,7 +981,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-20,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -861,7 +989,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -869,7 +997,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(20,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -877,7 +1005,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(40,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -885,7 +1013,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(60,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -893,7 +1021,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(80,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -901,7 +1029,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(100,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -909,7 +1037,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(120,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -917,7 +1045,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(140,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -925,7 +1053,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(160,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -933,7 +1061,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(180,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -941,7 +1069,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(200,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -957,7 +1085,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(240,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -965,7 +1093,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(260,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -973,14 +1101,14 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(280,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(300,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -989,7 +1117,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(320,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1005,7 +1133,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(360,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -1014,7 +1142,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(380,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1022,7 +1150,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(400,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1030,7 +1158,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(420,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1038,7 +1166,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(440,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1046,7 +1174,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(460,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1054,7 +1182,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(480,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1062,7 +1190,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(500,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1071,7 +1199,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(520,400, -400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
-scene.add(cube);
+scene.add(cube);cube.receiveShadow = true;
 
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1079,49 +1207,49 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-480,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-460,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-440,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-420,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-400,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-380,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-360,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -1135,84 +1263,84 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-320,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-300,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-280,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-260,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-240,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-220,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-200,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-180,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-160,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-140,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-120,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-100,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1220,7 +1348,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-80,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1228,7 +1356,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-60,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1236,7 +1364,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-40,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1244,7 +1372,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(-20,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1252,7 +1380,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1260,7 +1388,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(20,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1268,7 +1396,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(40,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1276,7 +1404,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(60,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1284,7 +1412,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(80,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1292,7 +1420,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(100,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1300,7 +1428,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(120,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1308,7 +1436,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(140,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1316,7 +1444,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(160,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1324,7 +1452,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(180,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1332,7 +1460,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(200,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1340,7 +1468,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(220,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1348,7 +1476,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(240,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1356,7 +1484,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(260,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1364,7 +1492,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(280,400,-380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -1380,7 +1508,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(320,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1388,7 +1516,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(340,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1396,7 +1524,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(360,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -1405,7 +1533,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(380,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1413,7 +1541,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(400,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1421,7 +1549,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(420,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1429,7 +1557,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(440,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1437,7 +1565,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(460,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1445,7 +1573,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(480,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1453,7 +1581,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(500,400, -380);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1461,7 +1589,7 @@ var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(520,400, -400);
 // Note that the mesh is flagged to cast shadows
-cube.castShadow = true;
+cube.castShadow = true;cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1470,6 +1598,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, -300);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -1488,6 +1617,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, 0);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -1497,6 +1627,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, -100);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
@@ -1505,6 +1636,7 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, 100);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 
 
@@ -1514,13 +1646,16 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, 200);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, 300);
+cube.receiveShadow = true;
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
 var cubeGeometry = new THREE.CubeGeometry( 10, 1000, 10 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff } );
@@ -1528,7 +1663,10 @@ cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 cube.position.set(0,400, 400);
 // Note that the mesh is flagged to cast shadows
 cube.castShadow = true;
+cube.receiveShadow = true;
 scene.add(cube);
+
+*/
 
 
 /*
@@ -1551,7 +1689,8 @@ scene.add(cube);
 	var darkMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } );
 
 */
-}
+
+
 function animate()
 {
     requestAnimationFrame( animate );
@@ -1568,10 +1707,13 @@ function update()
 	controls.update();
 	stats.update();
 }
-function render()
-{
-	renderer.render( scene, camera );
+function render() {
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
 }
+
+render();
 </script>
 
 </body>
