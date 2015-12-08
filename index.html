@@ -1709,7 +1709,8 @@ function update()
 }
 function render() {
     renderer.render(scene, camera);
-
+var clock = new THREE.Clock;
+cube.rotation.y -= clock.getDelta();
     requestAnimationFrame(render);
 }
 
