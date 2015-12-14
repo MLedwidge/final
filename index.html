@@ -51,16 +51,16 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.center = new THREE.Vector3();
 
 	this.userZoom = true;
-	this.userZoomSpeed = 1.0;
+	this.userZoomSpeed = 0.2;
 
 	this.userRotate = true;
-	this.userRotateSpeed = 1.0;
+	this.userRotateSpeed = 0.4;
 
 	this.userPan = true;
 	this.userPanSpeed = 2.0;
 
-	this.autoRotate = false;
-	this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
+	this.autoRotate = true;
+	this.autoRotateSpeed = 1.0; // 30 seconds per round when fps is 60
 
 	this.minPolarAngle = 0; // radians
 	this.maxPolarAngle = Math.PI; // radians
@@ -492,7 +492,7 @@ function init()
 
 	// SKYBOX/FOG
 	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, side: THREE.BackSide } );
+	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x000066, side: THREE.BackSide } );
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	// scene.add(skyBox);
 	scene.fog = new THREE.FogExp2( 0xffffff, 0.000015 );
